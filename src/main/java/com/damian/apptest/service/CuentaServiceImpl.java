@@ -5,6 +5,7 @@ import com.damian.apptest.entidad.Cuenta;
 import com.damian.apptest.repositorio.BancoRepositorio;
 import com.damian.apptest.repositorio.CuentaRepositorio;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.math.BigDecimal;
 import java.util.Optional;
@@ -20,23 +21,27 @@ public class CuentaServiceImpl implements CuentaService{
     }
 
     @Override
+    @Transactional(readOnly = true)
     public Cuenta findById(Long id) {
         return cuentaRepositorio.findById(id).orElseThrow();
     }
 
     @Override
+    @Transactional(readOnly = true)
     public int revisarTotalDeTransferencia(Long bancoId) {
         Banco banco = bancoRepositorio.findById(bancoId).orElseThrow();
         return banco.getTotal();
     }
 
     @Override
+    @Transactional(readOnly = true)
     public BigDecimal revisarSaldo(Long cuentaId) {
         Cuenta cuenta = cuentaRepositorio.findById(cuentaId).orElseThrow();
         return cuenta.getSaldo();
     }
 
     @Override
+    @Transactional
     public void tranferir(Long cuentaOrigen, Long cuentaDestino, BigDecimal monto, Long bancoId) {
       Banco banco = bancoRepositorio.findById(bancoId).orElseThrow();
         int totalTransferencia = banco.getTotal();
