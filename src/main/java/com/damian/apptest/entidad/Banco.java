@@ -1,8 +1,13 @@
 package com.damian.apptest.entidad;
 
 
+import javax.persistence.*;
 
+@Entity
+@Table(name = "bancos")
 public class Banco {
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
     private String nombre;
     private int total;
