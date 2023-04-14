@@ -4,9 +4,10 @@ import com.damian.apptest.entidad.Banco;
 import com.damian.apptest.entidad.Cuenta;
 import com.damian.apptest.repositorio.BancoRepositorio;
 import com.damian.apptest.repositorio.CuentaRepositorio;
+import org.springframework.stereotype.Service;
 
 import java.math.BigDecimal;
-
+@Service
 public class CuentaServiceImpl implements CuentaService{
     private CuentaRepositorio cuentaRepositorio;
     private BancoRepositorio bancoRepositorio;
@@ -38,12 +39,15 @@ public class CuentaServiceImpl implements CuentaService{
         Banco banco = bancoRepositorio.findById(bancoId);
         int totalTransferencia = banco.getTotal();
         banco.setTotal(++totalTransferencia);
-        bancoRepositorio.save(banco);
+
         Cuenta origen = cuentaRepositorio.findById(cuentaOrigen);
+
         origen.debito(monto);
-        cuentaRepositorio.save(origen);
         Cuenta destino = cuentaRepositorio.findById(cuentaDestino);
+
         destino.credito(monto);
+        cuentaRepositorio.save(origen);
+        bancoRepositorio.save(banco);
         cuentaRepositorio.save(destino);
 
 
