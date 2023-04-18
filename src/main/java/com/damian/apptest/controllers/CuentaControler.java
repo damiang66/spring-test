@@ -6,6 +6,7 @@ import com.damian.apptest.service.CuentaService;
 import org.springframework.beans.factory.annotation.Autowired;
 import  static org.springframework.http.HttpStatus.*;
 
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 
 import org.springframework.web.bind.annotation.*;
@@ -36,5 +37,13 @@ public class CuentaControler {
         response.put("transaccion", dto);
         return ResponseEntity.ok().body(response);
 
+    }
+    @GetMapping
+    public ResponseEntity<?>listar(){
+        return ResponseEntity.ok().body(cuentaService.findAll());
+    }
+    @PostMapping
+    public ResponseEntity<?>guardar(@RequestBody Cuenta cuenta){
+        return ResponseEntity.status(CREATED).body(cuentaService.save(cuenta));
     }
 }
