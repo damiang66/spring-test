@@ -70,4 +70,9 @@ public class CuentaServiceImpl implements CuentaService{
 
 
     }
+
+    @Override
+    public void eliminar(Long id) {
+        cuentaRepositorio.deleteById(id);
+    }
 }
